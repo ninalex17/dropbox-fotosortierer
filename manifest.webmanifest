@@ -1,1 +1,25 @@
-{"name":"Meine Dropbox Fotosortierung","short_name":"Fotosortierung","start_url":"./","display":"standalone","background_color":"#f5f7fb","theme_color":"#155eef","icons":[]}
+{
+  "name": "Meine Dropbox Fotosortierung",
+  "short_name": "Fotosortierung",
+  "description": "Fotos und Videos aus Dropbox sortieren und sicher fortsetzen",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f7fb",
+  "theme_color": "#155eef",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
