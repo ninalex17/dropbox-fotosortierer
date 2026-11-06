@@ -1,0 +1,45 @@
+name: Android Test-APK
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Quellcode laden
+        uses: actions/checkout@v4
+      - name: Java 17 einrichten
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Android SDK einrichten
+        uses: android-actions/setup-android@v3
+      - name: Gradle 8.9 einrichten
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Dropbox App Key prüfen
+        env:
+          DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
+        run: |
+          if [ -z "$DROPBOX_APP_KEY" ]; then
+            echo 'DROPBOX_APP_KEY fehlt unter Settings > Secrets and variables > Actions.'
+            exit 1
+          fi
+      - name: Debug APK erstellen
+        env:
+          ORG_GRADLE_PROJECT_DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
+        run: gradle --no-daemon :app:assembleDebug
+      - name: APK als Download bereitstellen
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fotoarchiv-Test-APK
+          path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 14
